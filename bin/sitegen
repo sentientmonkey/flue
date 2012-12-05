@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'sitegen'
+
+Sitegen::Runner.new.run
