@@ -43,6 +43,12 @@ describe MarkdownFilter do
   end
 end
 
+describe TextileFilter do
+  it "should filter textile" do
+    TextileFilter.filter("h1. Just a test").must_equal "<h1>Just a test</h1>"
+  end
+end
+
 describe ERBFilter do
   it "should filter erb" do
     ERBFilter.filter("<p><%= 1 + 2 %></p>").must_equal "<p>3</p>"

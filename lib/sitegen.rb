@@ -1,6 +1,7 @@
 require "sitegen/version"
 require "erb"
 require "maruku"
+require "redcloth"
 
 module Sitegen
   class Basefile
@@ -45,6 +46,12 @@ module Sitegen
     end
   end
 
+  class TextileFilter
+    def self.filter(input)
+      RedCloth.new(input).to_html
+    end
+  end
+
   class ERBFilter
     def self.filter(input)
       ERB.new(input).result(binding)
@@ -80,6 +87,7 @@ module Sitegen
 
   FilterRegister.register :erb, ERBFilter
   FilterRegister.register :md, MarkdownFilter
+  FilterRegister.register :textile, TextileFilter
 
   class Runner
     def files
