@@ -5,6 +5,7 @@ require "maruku"
 require "redcloth"
 require "gemoji"
 require "sass"
+require "coffee-script"
 
 module Sitegen
   class Basefile
@@ -88,6 +89,12 @@ module Sitegen
     end
   end
 
+  class CoffeeScriptFilter < ContentFilter
+    def self.filter(input)
+      CoffeeScript.compile(input)
+    end
+  end
+
   class FilterRegister
     @@filters = {}
 
@@ -120,6 +127,7 @@ module Sitegen
   FilterRegister.register :textile, TextileFilter
   FilterRegister.register :emoji, EmojiFilter
   FilterRegister.register :sass, SassFilter
+  FilterRegister.register :coffee, CoffeeScriptFilter
 
   class Runner
     def files

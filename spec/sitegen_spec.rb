@@ -83,3 +83,17 @@ describe SassFilter do
     SassFilter.filter("table.h1{ td.ln { font: { color: red; } } }").must_equal "table.h1 td.ln {\n  font-color: red; }\n"
   end
 end
+
+describe CoffeeScriptFilter do
+  it "should filter coffeescript" do
+    CoffeeScriptFilter.filter("number = 42").must_equal (<<-eos
+(function() {
+  var number;
+
+  number = 42;
+
+}).call(this);
+eos
+)
+  end
+end
