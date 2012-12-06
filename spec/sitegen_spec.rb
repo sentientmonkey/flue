@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require "minitest/spec"
+require "minitest/mock"
 require "minitest/autorun"
 require "minitest/pride"
 require 'sitegen'
@@ -52,6 +53,16 @@ end
 describe ERBFilter do
   it "should filter erb" do
     ERBFilter.filter("<p><%= 1 + 2 %></p>").must_equal "<p>3</p>"
+  end
+end
+
+describe EmojiFilter do
+  it "should filter emoji" do
+    FileUtils.stub :mkdir_p, true do
+      FileUtils.stub :cp, true do
+        EmojiFilter.filter(":poop:").must_equal '<img alt="poop" height="20" src="images/emoji/poop.png" style="vertical-align:middle" width="20" />'
+      end
+    end
   end
 end
 

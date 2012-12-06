@@ -12,13 +12,14 @@ Gem::Specification.new do |gem|
   gem.summary       = %q{An AMAZING static site generator}
   gem.homepage      = ""
 
-  gem.files         = `git ls-files`.split($/)
+  gem.files         = `git ls-files`.split($/).reject{|f| f =~ /example/ }
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
   gem.add_dependency 'rake'
   gem.add_dependency 'maruku'
   gem.add_dependency 'RedCloth'
+  gem.add_dependency 'gemoji'
   gem.add_development_dependency 'minitest'
 
 end

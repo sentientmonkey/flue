@@ -1,7 +1,9 @@
 require "sitegen/version"
 require "erb"
+require "fileutils"
 require "maruku"
 require "redcloth"
+require "gemoji"
 
 module Sitegen
   class Basefile
@@ -40,21 +42,41 @@ module Sitegen
     end
   end
 
-  class MarkdownFilter
+  class ContentFilter
+    def self.filter(input)
+      input
+    end
+  end
+
+  class MarkdownFilter < ContentFilter
     def self.filter(input)
       Maruku.new(input).to_html
     end
   end
 
-  class TextileFilter
+  class TextileFilter < ContentFilter
     def self.filter(input)
       RedCloth.new(input).to_html
     end
   end
 
-  class ERBFilter
+  class ERBFilter < ContentFilter
     def self.filter(input)
       ERB.new(input).result(binding)
+    end
+  end
+
+  class EmojiFilter < ContentFilter
+    def self.filter(input)
+     input.gsub(/:([a-z0-9\+\-_]+):/) do |match|
+        if Emoji.names.include?($1)
+          FileUtils.mkdir_p "_site/images/emoji"
+          FileUtils.cp "#{Emoji.images_path}/emoji/#{$1}.png", "_site/images/emoji/#{$1}.png"
+          '<img alt="' + $1 + '" height="20" src="images/' + "emoji/#{$1}.png" + '" style="vertical-align:middle" width="20" />'
+        else
+          match
+        end
+      end
     end
   end
 
@@ -88,6 +110,7 @@ module Sitegen
   FilterRegister.register :erb, ERBFilter
   FilterRegister.register :md, MarkdownFilter
   FilterRegister.register :textile, TextileFilter
+  FilterRegister.register :emoji, EmojiFilter
 
   class Runner
     def files
