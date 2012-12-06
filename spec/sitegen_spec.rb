@@ -40,7 +40,19 @@ end
 
 describe MarkdownFilter do
   it "should filter markdown" do
-    MarkdownFilter.filter("# Foo").must_equal "<h1 id='foo'>Foo</h1>"
+    MarkdownFilter.filter("# Foo").must_equal (<<-eos
+<?xml version=\"1.0\" encoding=\"utf-8\"?>
+<!DOCTYPE html PUBLIC
+    \"-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN\"
+    \"http://www.w3.org/2002/04/xhtml-math-svg/xhtml-math-svg.dtd\">
+<html xml:lang='en' xmlns:svg='http://www.w3.org/2000/svg' xmlns='http://www.w3.org/1999/xhtml'>
+<head><meta content='application/xhtml+xml;charset=utf-8' http-equiv='Content-type' /><title>Foo</title></head>
+<body>
+<h1 id='foo'>Foo</h1>
+</body></html>
+eos
+).chomp
+
   end
 end
 
@@ -64,12 +76,10 @@ describe EmojiFilter do
       end
     end
   end
+end
 
 describe SassFilter do
   it "should filter sass" do
     SassFilter.filter("table.h1{ td.ln { font: { color: red; } } }").must_equal "table.h1 td.ln {\n  font-color: red; }\n"
   end
 end
-
-end
-
