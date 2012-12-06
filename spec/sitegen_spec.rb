@@ -10,15 +10,15 @@ include Sitegen
 
 describe Basefile do
   let(:md_erb) do
-    Basefile.new("site/test.md.erb")
+    Basefile.new("site/test.md.erb.html")
   end
 
   it "should have basename" do
-    md_erb.basename.must_equal "test.md.erb"
+    md_erb.basename.must_equal "test.md.erb.html"
   end
 
   it "should have parts" do
-    md_erb.parts.must_equal ["test","md","erb"]
+    md_erb.parts.must_equal ["test","md","erb", "html"]
   end
 
   it "should have exts" do
@@ -64,5 +64,12 @@ describe EmojiFilter do
       end
     end
   end
+
+describe SassFilter do
+  it "should filter sass" do
+    SassFilter.filter("table.h1{ td.ln { font: { color: red; } } }").must_equal "table.h1 td.ln {\n  font-color: red; }\n"
+  end
+end
+
 end
 

@@ -20,6 +20,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'maruku'
   gem.add_dependency 'RedCloth'
   gem.add_dependency 'gemoji'
+  gem.add_dependency 'sass'
   gem.add_development_dependency 'minitest'
-
 end

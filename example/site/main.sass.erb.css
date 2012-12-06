@@ -1,0 +1,8 @@
+body {
+  background-color: #EEE;
+  color: #444;
+  h1 {
+    color: <%= "red" %>;
+    font-size: 42px;
+  }
+}

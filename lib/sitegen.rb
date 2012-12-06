@@ -4,6 +4,7 @@ require "fileutils"
 require "maruku"
 require "redcloth"
 require "gemoji"
+require "sass"
 
 module Sitegen
   class Basefile
@@ -26,11 +27,11 @@ module Sitegen
     end
 
     def exts
-      parts[1..-1]
+      parts[1..-2]
     end
 
     def outfile_basename
-      [parts[0], "html"].join(".")
+      [parts[0], parts[-1]].join(".")
     end
 
     def outfile_name
@@ -50,7 +51,7 @@ module Sitegen
 
   class MarkdownFilter < ContentFilter
     def self.filter(input)
-      Maruku.new(input).to_html
+      Maruku.new(input).to_html_document
     end
   end
 
@@ -77,6 +78,13 @@ module Sitegen
           match
         end
       end
+    end
+  end
+
+  class SassFilter < ContentFilter
+    def self.filter(input)
+      engine = Sass::Engine.new(input, :syntax => :scss)
+      engine.render
     end
   end
 
@@ -111,6 +119,7 @@ module Sitegen
   FilterRegister.register :md, MarkdownFilter
   FilterRegister.register :textile, TextileFilter
   FilterRegister.register :emoji, EmojiFilter
+  FilterRegister.register :sass, SassFilter
 
   class Runner
     def files
