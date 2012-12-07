@@ -78,6 +78,16 @@ describe EmojiFilter do
   end
 end
 
+describe CodeFilter do
+  it "should filter code" do
+    CodeFilter.filter("<code>puts 'hi'</code>").must_equal <<-eos
+<div class="CodeRay">
+  <div class="code"><pre>puts <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">hi</span><span style="color:#710">'</span></span></pre></div>
+</div>
+eos
+  end
+end
+
 describe SassFilter do
   it "should filter sass" do
     SassFilter.filter("table.h1{ td.ln { font: { color: red; } } }").must_equal "table.h1 td.ln {\n  font-color: red; }\n"

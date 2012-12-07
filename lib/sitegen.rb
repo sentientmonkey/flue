@@ -6,6 +6,8 @@ require "redcloth"
 require "gemoji"
 require "sass"
 require "coffee-script"
+require "nokogiri"
+require "coderay"
 
 module Sitegen
   class Basefile
@@ -82,6 +84,17 @@ module Sitegen
     end
   end
 
+  class CodeFilter < ContentFilter
+    def self.filter(input)
+      doc = Nokogiri::HTML::DocumentFragment.parse(input)
+      doc.css('code').each do |code|
+        language = code["data-language"] || "ruby"
+        code.replace(CodeRay.scan(code.content, language.to_sym).div)
+      end
+      doc.to_html
+    end
+  end
+
   class SassFilter < ContentFilter
     def self.filter(input)
       engine = Sass::Engine.new(input, :syntax => :scss)
@@ -126,6 +139,7 @@ module Sitegen
   FilterRegister.register :md, MarkdownFilter
   FilterRegister.register :textile, TextileFilter
   FilterRegister.register :emoji, EmojiFilter
+  FilterRegister.register :code, CodeFilter
   FilterRegister.register :sass, SassFilter
   FilterRegister.register :coffee, CoffeeScriptFilter
 
