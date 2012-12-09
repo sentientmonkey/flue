@@ -4,7 +4,7 @@ include Sitegen
 
 describe MarkdownFilter do
   it "should filter markdown" do
-    MarkdownFilter.filter("# Foo").must_equal (<<-eos
+    MarkdownFilter.new.call("# Foo").must_equal (<<-eos
 <?xml version=\"1.0\" encoding=\"utf-8\"?>
 <!DOCTYPE html PUBLIC
     \"-//W3C//DTD XHTML 1.1 plus MathML 2.0 plus SVG 1.1//EN\"
@@ -22,13 +22,13 @@ end
 
 describe TextileFilter do
   it "should filter textile" do
-    TextileFilter.filter("h1. Just a test").must_equal "<h1>Just a test</h1>"
+    TextileFilter.new.call("h1. Just a test").must_equal "<h1>Just a test</h1>"
   end
 end
 
 describe ERBFilter do
   it "should filter erb" do
-    ERBFilter.filter("<p><%= 1 + 2 %></p>").must_equal "<p>3</p>"
+    ERBFilter.new.call("<p><%= 1 + 2 %></p>").must_equal "<p>3</p>"
   end
 end
 
@@ -36,7 +36,7 @@ describe EmojiFilter do
   it "should filter emoji" do
     FileUtils.stub :mkdir_p, true do
       FileUtils.stub :cp, true do
-        EmojiFilter.filter(":poop:").must_equal '<img alt="poop" height="20" src="images/emoji/poop.png" style="vertical-align:middle" width="20" />'
+        EmojiFilter.new.call(":poop:").must_equal '<img alt="poop" height="20" src="images/emoji/poop.png" style="vertical-align:middle" width="20" />'
       end
     end
   end
@@ -44,7 +44,7 @@ end
 
 describe CodeFilter do
   it "should filter code" do
-    CodeFilter.filter("<code>puts 'hi'</code>").must_equal <<-eos
+    CodeFilter.new.call("<code>puts 'hi'</code>").must_equal <<-eos
 <div class="CodeRay">
   <div class="code"><pre>puts <span style="background-color:hsla(0,100%,50%,0.05)"><span style="color:#710">'</span><span style="color:#D20">hi</span><span style="color:#710">'</span></span></pre></div>
 </div>
@@ -54,13 +54,13 @@ end
 
 describe SassFilter do
   it "should filter sass" do
-    SassFilter.filter("table.h1{ td.ln { font: { color: red; } } }").must_equal "table.h1 td.ln {\n  font-color: red; }\n"
+    SassFilter.new.call("table.h1{ td.ln { font: { color: red; } } }").must_equal "table.h1 td.ln {\n  font-color: red; }\n"
   end
 end
 
 describe CoffeeScriptFilter do
   it "should filter coffeescript" do
-    CoffeeScriptFilter.filter("number = 42").must_equal (<<-eos
+    CoffeeScriptFilter.new.call("number = 42").must_equal (<<-eos
 (function() {
   var number;
 

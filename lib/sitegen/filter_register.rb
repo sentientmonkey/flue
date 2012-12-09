@@ -19,7 +19,7 @@ module Sitegen
 
     def self.run_ext(ext,content)
       if filters[ext]
-        filters[ext].filter(content)
+        filters[ext].new.call(content)
       else
         content
       end

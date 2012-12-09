@@ -8,32 +8,26 @@ require "nokogiri"
 require "coderay"
 
 module Sitegen
-  class ContentFilter
-    def self.filter(input)
-      input
-    end
-  end
-
-  class MarkdownFilter < ContentFilter
-    def self.filter(input)
+  class MarkdownFilter
+    def call(input)
       Maruku.new(input).to_html_document
     end
   end
 
-  class TextileFilter < ContentFilter
-    def self.filter(input)
+  class TextileFilter
+    def call(input)
       RedCloth.new(input).to_html
     end
   end
 
-  class ERBFilter < ContentFilter
-    def self.filter(input)
+  class ERBFilter
+    def call(input)
       ERB.new(input).result(binding)
     end
   end
 
-  class EmojiFilter < ContentFilter
-    def self.filter(input)
+  class EmojiFilter
+    def call(input)
      input.gsub(/:([a-z0-9\+\-_]+):/) do |match|
         if Emoji.names.include?($1)
           FileUtils.mkdir_p "_site/images/emoji"
@@ -46,8 +40,8 @@ module Sitegen
     end
   end
 
-  class CodeFilter < ContentFilter
-    def self.filter(input)
+  class CodeFilter
+    def call(input)
       doc = Nokogiri::HTML::DocumentFragment.parse(input)
       doc.css('code').each do |code|
         language = code["data-language"] || "ruby"
@@ -57,15 +51,15 @@ module Sitegen
     end
   end
 
-  class SassFilter < ContentFilter
-    def self.filter(input)
+  class SassFilter
+    def call(input)
       engine = Sass::Engine.new(input, :syntax => :scss)
       engine.render
     end
   end
 
-  class CoffeeScriptFilter < ContentFilter
-    def self.filter(input)
+  class CoffeeScriptFilter
+    def call(input)
       CoffeeScript.compile(input)
     end
   end
