@@ -25,4 +25,5 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'coderay'
   gem.add_development_dependency 'minitest'
+  gem.add_development_dependency 'simplecov'
 end
