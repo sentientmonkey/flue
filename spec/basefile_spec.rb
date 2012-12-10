@@ -28,5 +28,12 @@ describe Basefile do
   it "should have outfile_name" do
     md_erb.outfile_name.must_equal "_site/test.html"
   end
+
+  it "should read basefile" do
+    test_content = "test content"
+    File.stub :read, test_content do
+      md_erb.content.must_equal test_content
+    end
+  end
 end
 

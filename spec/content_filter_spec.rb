@@ -1,7 +1,5 @@
 require "./spec/test_helper.rb"
 
-include Sitegen
-
 describe MarkdownFilter do
   it "should filter markdown" do
     MarkdownFilter.new.call("# Foo").must_equal (<<-eos
@@ -56,6 +54,10 @@ describe EmojiFilter do
         EmojiFilter.new.call(":poop:").must_equal '<img alt="poop" height="20" src="images/emoji/poop.png" style="vertical-align:middle" width="20" />'
       end
     end
+  end
+
+  it "should not filter invalid emoji names" do
+    EmojiFilter.new.call(":unicornsprinkles:").must_equal ":unicornsprinkles:"
   end
 end
 
