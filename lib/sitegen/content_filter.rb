@@ -10,32 +10,39 @@ require "coderay"
 
 module Sitegen
   class MarkdownFilter
-    def call(input)
-      Maruku.new(input).to_html_document
+    def call(input, options={})
+      maruku = Maruku.new(input)
+      if options[:partial]
+        maruku.to_html
+      else
+        maruku.to_html_document
+      end
     end
   end
 
   class TextileFilter
-    def call(input)
+    def call(input, options={})
       RedCloth.new(input).to_html
     end
   end
 
   class ERBFilter
-    def call(input)
+    include Sitegen::Benchmark
+
+    def call(input, options={})
       ERB.new(input).result(binding)
     end
 
     def partial(name)
-      partial_name = Dir[File.join(["site", "_#{name.to_s}"]) + "*"].first
-      puts "partial name: #{partial_name}"
-      call( Basefile.new(partial_name).content )
+      partialfile = PartialFile.new(name)
+      benchmark "#{partialfile.basename} => partial" do
+        call( FilterRegister.run(partialfile.exts, partialfile.content, :partial => true) )
+      end
     end
-
   end
 
   class EmojiFilter
-    def call(input)
+    def call(input, options={})
      input.gsub(/:([a-z0-9\+\-_]+):/) do |match|
         if Emoji.names.include?($1)
           FileUtils.mkdir_p "_site/images/emoji"
@@ -49,7 +56,7 @@ module Sitegen
   end
 
   class CodeFilter
-    def call(input)
+    def call(input, options={})
       doc = Nokogiri::HTML::DocumentFragment.parse(input)
       doc.css('code').each do |code|
         language = code["data-language"] || "ruby"
@@ -60,14 +67,14 @@ module Sitegen
   end
 
   class SassFilter
-    def call(input)
+    def call(input, options={})
       engine = Sass::Engine.new(input, :syntax => :scss)
       engine.render
     end
   end
 
   class CoffeeScriptFilter
-    def call(input)
+    def call(input, options={})
       CoffeeScript.compile(input)
     end
   end

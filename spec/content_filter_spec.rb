@@ -16,7 +16,10 @@ describe MarkdownFilter do
 </body></html>
 eos
 ).chomp
+  end
 
+  it "should filter markdown partial" do
+    MarkdownFilter.new.call("# Foo", :partial => true).must_equal "<h1 id='foo'>Foo</h1>"
   end
 end
 
@@ -32,8 +35,16 @@ describe ERBFilter do
   end
 
   it "should filter erb with partial" do
-    File.stub :read, "<p>This is a test</p>" do
-      ERBFilter.new.call("<%= partial :test %>").must_equal "<p>This is a test</p>"
+    basefile = MiniTest::Mock.new
+    basefile.expect :exts, []
+    basefile.expect :content, "test"
+    basefile.expect :basename, "_test.html"
+    Dir.stub :[], ["test"] do
+      Basefile.stub :new, basefile do
+        FilterRegister.stub :run, "<p>This is a test</p>" do
+          ERBFilter.new.call("<%= partial :test %>").must_equal "<p>This is a test</p>"
+        end
+      end
     end
   end
 end

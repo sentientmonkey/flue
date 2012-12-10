@@ -2,10 +2,11 @@ require "fileutils"
 
 module Sitegen
   class Basefile
-    attr_reader :filename
+    attr_reader :filename, :options
 
-    def initialize(filename)
+    def initialize(filename, options={})
       @filename = filename
+      @options = options
     end
 
     def parts

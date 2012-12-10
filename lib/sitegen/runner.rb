@@ -1,17 +1,11 @@
 require "fileutils"
-require "benchmark"
 
 module Sitegen
   class Runner
+    include Sitegen::Benchmark
+
     def files
       Dir["site/[^_]*"]
-    end
-
-    def benchmark(label)
-      ms = Benchmark.realtime do
-        yield
-      end
-      puts "#{label} (#{ms})"
     end
 
     def run
