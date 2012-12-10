@@ -1,4 +1,5 @@
 require "erb"
+require "fileutils"
 require "maruku"
 require "redcloth"
 require "gemoji"
@@ -24,6 +25,13 @@ module Sitegen
     def call(input)
       ERB.new(input).result(binding)
     end
+
+    def partial(name)
+      partial_name = Dir[File.join(["site", "_#{name.to_s}"]) + "*"].first
+      puts "partial name: #{partial_name}"
+      call( Basefile.new(partial_name).content )
+    end
+
   end
 
   class EmojiFilter

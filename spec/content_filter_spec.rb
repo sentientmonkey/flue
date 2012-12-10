@@ -30,6 +30,12 @@ describe ERBFilter do
   it "should filter erb" do
     ERBFilter.new.call("<p><%= 1 + 2 %></p>").must_equal "<p>3</p>"
   end
+
+  it "should filter erb with partial" do
+    File.stub :read, "<p>This is a test</p>" do
+      ERBFilter.new.call("<%= partial :test %>").must_equal "<p>This is a test</p>"
+    end
+  end
 end
 
 describe EmojiFilter do
