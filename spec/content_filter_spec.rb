@@ -40,7 +40,9 @@ describe ERBFilter do
     Dir.stub :[], ["test"] do
       Basefile.stub :new, basefile do
         FilterRegister.stub :run, "<p>This is a test</p>" do
-          ERBFilter.new.call("<%= partial :test %>").must_equal "<p>This is a test</p>"
+          lambda do
+            ERBFilter.new.call("<%= partial :test %>").must_equal "<p>This is a test</p>"
+          end.must_output /_test.html => partial/
         end
       end
     end

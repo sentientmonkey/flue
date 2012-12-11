@@ -1,0 +1,2 @@
+* Add logging object so we don't have to rely on puts
+* Set up data loader for .yml files / bind to erb
