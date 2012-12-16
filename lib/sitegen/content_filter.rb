@@ -30,6 +30,11 @@ module Sitegen
     include Sitegen::Benchmark
 
     def call(input, options={})
+      if options[:variables]
+        options[:variables].each do |name,value|
+          instance_variable_set("@#{name.to_s}", value)
+        end
+      end
       ERB.new(input).result(binding)
     end
 

@@ -32,6 +32,10 @@ describe ERBFilter do
     ERBFilter.new.call("<p><%= 1 + 2 %></p>").must_equal "<p>3</p>"
   end
 
+  it "should filter erb with variables" do
+    ERBFilter.new.call("<p><%= @a + @b %></p>", :variables => {:a => 1, :b => 2}).must_equal "<p>3</p>"
+  end
+
   it "should filter erb with partial" do
     basefile = MiniTest::Mock.new
     basefile.expect :exts, []

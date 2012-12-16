@@ -33,6 +33,20 @@ module Sitegen
       ["_site", outfile_basename].join("/")
     end
 
+    def datafile_basename
+      [parts[0], "yml"].join(".")
+    end
+
+    def datafile_name
+      [dirname, datafile_basename].join("/")
+    end
+
+    def datafile
+      if File.exists? datafile_name
+        File.read(datafile_name)
+      end
+    end
+
     def content
       File.read(filename)
     end
