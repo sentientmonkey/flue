@@ -3,14 +3,24 @@ require 'logger'
 module Sitegen
   module Logger
     DEFAULT_LOGGER = ::Logger.new($stdout)
-    @@logger = DEFAULT_LOGGER
 
-    def self.logger=(logger)
-      @@logger = logger
+    def self.included(base)
+      base.extend ClassMethods
     end
 
     def logger
-      @@logger || DEFAULT_LOGGER
+      self.class.logger || DEFAULT_LOGGER
     end
+
+    module ClassMethods
+      def logger
+        @logger
+      end
+
+      def logger=(new_logger)
+        @logger = new_logger
+      end
+    end
+
   end
 end

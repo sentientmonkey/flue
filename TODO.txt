@@ -1,6 +1,7 @@
-* Add logging object so we don't have to rely on puts
+* Add logging object so we don't have to rely on puts [done]
 * Set up data loader for .yml files / bind to erb [done]
-* Set up other variables for .yml files
+* Set up other bound variables for .yml files (sass/coffescript?)
+* Set up default filters via final ext
 * Add publishers for s3/ftp/rsync
 * Add config for site/public
 * Rename the bastard
