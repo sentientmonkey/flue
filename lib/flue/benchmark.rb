@@ -1,6 +1,6 @@
 require "benchmark"
 
-module Sitegen
+module Flue
   module Benchmark
     def benchmark(label)
       result = nil

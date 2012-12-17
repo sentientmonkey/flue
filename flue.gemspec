@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'sitegen/version'
+require 'flue/version'
 
 Gem::Specification.new do |gem|
-  gem.name          = "sitegen"
-  gem.version       = Sitegen::VERSION
+  gem.name          = "flue"
+  gem.version       = Flue::VERSION
   gem.authors       = ["Scott Windsor"]
   gem.email         = ["swindsor@gmail.com"]
   gem.description   = %q{A static site generator}

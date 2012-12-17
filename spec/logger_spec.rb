@@ -2,7 +2,7 @@ require "./spec/test_helper.rb"
 
 describe Logger do
   class Foo
-    include Sitegen::Logger
+    include Flue::Logger
   end
 
   let(:custom_logger) do

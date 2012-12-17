@@ -1,4 +1,4 @@
-# Sitegen
+# Flue
 
 TODO: Write a gem description
 

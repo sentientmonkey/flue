@@ -1,10 +1,10 @@
 require "fileutils"
 require "yaml"
 
-module Sitegen
+module Flue
   class Runner
-    include Sitegen::Benchmark
-    include Sitegen::Logger
+    include Flue::Benchmark
+    include Flue::Logger
 
     def files
       Dir["site/[^_]*"] - Dir["site/*.yml"]

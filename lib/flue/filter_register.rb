@@ -1,4 +1,4 @@
-module Sitegen
+module Flue
   class FilterRegister
     @@filters = {}
 

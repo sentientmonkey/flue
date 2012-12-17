@@ -1,4 +1,4 @@
-module Sitegen
+module Flue
 
   FilterRegister.register :erb, ERBFilter
   FilterRegister.register :md, MarkdownFilter

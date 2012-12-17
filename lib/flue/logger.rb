@@ -1,6 +1,6 @@
 require 'logger'
 
-module Sitegen
+module Flue
   module Logger
     DEFAULT_LOGGER = ::Logger.new($stdout)
 

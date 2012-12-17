@@ -8,7 +8,7 @@ require "coffee-script"
 require "nokogiri"
 require "coderay"
 
-module Sitegen
+module Flue
   class MarkdownFilter
     def call(input, options={})
       maruku = Maruku.new(input)
@@ -27,8 +27,8 @@ module Sitegen
   end
 
   class ERBFilter
-    include Sitegen::Logger
-    include Sitegen::Benchmark
+    include Flue::Logger
+    include Flue::Benchmark
 
     def call(input, options={})
       if options[:variables]

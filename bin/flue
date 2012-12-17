@@ -1,0 +1,5 @@
+#!/usr/bin/env ruby
+
+require 'flue'
+
+Flue::Runner.new.run

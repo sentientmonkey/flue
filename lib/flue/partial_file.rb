@@ -1,6 +1,6 @@
 require "forwardable"
 
-module Sitegen
+module Flue
   class PartialFile
     extend Forwardable
     attr_reader :name

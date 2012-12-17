@@ -1,6 +1,6 @@
 require "fileutils"
 
-module Sitegen
+module Flue
   class Basefile
     attr_reader :filename, :options
 
