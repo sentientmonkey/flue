@@ -4,13 +4,14 @@ require "yaml"
 module Sitegen
   class Runner
     include Sitegen::Benchmark
+    include Sitegen::Logger
 
     def files
       Dir["site/[^_]*"] - Dir["site/*.yml"]
     end
 
     def run
-      puts "beginning run..."
+      logger.info "beginning run..."
       files.each do |file|
         basefile = Basefile.new(file)
         File.open(basefile.outfile_name, "w") do |f|

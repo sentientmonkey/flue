@@ -7,7 +7,9 @@ module Sitegen
       ms = ::Benchmark.realtime do
         result = yield
       end
-      puts "#{label} (#{ms})"
+      if logger
+        logger.info "#{label} (#{ms})"
+      end
       result
     end
   end

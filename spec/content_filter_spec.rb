@@ -41,12 +41,15 @@ describe ERBFilter do
     basefile.expect :exts, []
     basefile.expect :content, "test"
     basefile.expect :basename, "_test.html"
+    logger = MiniTest::Mock.new
+    logger.expect :info, true, [/_test\.html => partial/]
     Dir.stub :[], ["test"] do
       Basefile.stub :new, basefile do
         FilterRegister.stub :run, "<p>This is a test</p>" do
-          lambda do
-            ERBFilter.new.call("<%= partial :test %>").must_equal "<p>This is a test</p>"
-          end.must_output /_test.html => partial/
+          erb_filter = ERBFilter.new
+          erb_filter.stub :logger, logger do
+            erb_filter.call("<%= partial :test %>").must_equal "<p>This is a test</p>"
+          end
         end
       end
     end

@@ -1,4 +1,5 @@
 require "sitegen/version"
+require "sitegen/logger"
 require "sitegen/benchmark"
 require "sitegen/basefile"
 require "sitegen/partial_file"

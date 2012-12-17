@@ -27,6 +27,7 @@ module Sitegen
   end
 
   class ERBFilter
+    include Sitegen::Logger
     include Sitegen::Benchmark
 
     def call(input, options={})

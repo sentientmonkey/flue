@@ -1,5 +1,6 @@
 * Add logging object so we don't have to rely on puts
-* Set up data loader for .yml files / bind to erb
+* Set up data loader for .yml files / bind to erb [done]
+* Set up other variables for .yml files
 * Add publishers for s3/ftp/rsync
 * Add config for site/public
 * Rename the bastard
