@@ -2,4 +2,4 @@
 
 require 'flue'
 
-Flue::Runner.new.run
+Flue::Runner.new.run(ARGV)

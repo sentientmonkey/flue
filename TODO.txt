@@ -4,7 +4,12 @@
 * Set up other bound variables for .yml files
   * sass [done]
   * coffeescript [done]
+* Add option to run server mode [done]
+* Add ability to "watch" files in server mode
 * Set up default filters via final ext
 * Add publishers for s3/ftp/rsync
 * Add config for site/public
 * Refactor out filters into seperate files
+* Add DAG for rebuild & dependancies
+  Can checksum files, build .meta.yaml file, trigger what needs to be rebuild via DAG
+  yaml -> partials -> template
