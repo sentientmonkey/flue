@@ -102,4 +102,19 @@ describe CoffeeScriptFilter do
 eos
 )
   end
+
+  it "should filter coffeescript with variables" do
+    CoffeeScriptFilter.new.call("alert number", :variables => {:number => 42}).must_equal (<<-eos
+(function() {
+  var number;
+
+  number = 42;
+
+  alert(number);
+
+}).call(this);
+eos
+)
+  end
+
 end

@@ -3,7 +3,8 @@
 * Rename the bastard [done]
 * Set up other bound variables for .yml files
   * sass [done]
-  * coffeescript
+  * coffeescript [done]
 * Set up default filters via final ext
 * Add publishers for s3/ftp/rsync
 * Add config for site/public
+* Refactor out filters into seperate files
