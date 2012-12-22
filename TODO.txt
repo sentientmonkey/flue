@@ -5,7 +5,8 @@
   * sass [done]
   * coffeescript [done]
 * Add option to run server mode [done]
-* Add ability to "watch" files in server mode
+* Add ability to refresh files in server mode [done]
+* Refactor down runner into renderer & option parser
 * Set up default filters via final ext
 * Add publishers for s3/ftp/rsync
 * Add config for site/public

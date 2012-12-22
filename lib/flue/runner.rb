@@ -15,18 +15,21 @@ module Flue
     end
 
     def render_files
-      #TODO refactor out
       files.each do |file|
-        basefile = Basefile.new(file)
-        File.open(basefile.outfile_name, "w") do |f|
-          benchmark "#{basefile.basename} => #{basefile.outfile_name}" do
-            options = {}
-            data = basefile.datafile
-            if data
-              options[:variables] = YAML.load(data)
-            end
-            f.write FilterRegister.run(basefile.exts, basefile.content, options)
+        render_file file
+      end
+    end
+
+    def render_file(file)
+      basefile = Basefile.new(file)
+      File.open(basefile.outfile_name, "w") do |f|
+        benchmark "#{basefile.basename} => #{basefile.outfile_name}" do
+          options = {}
+          data = basefile.datafile
+          if data
+            options[:variables] = YAML.load(data)
           end
+          f.write FilterRegister.run(basefile.exts, basefile.content, options)
         end
       end
     end
@@ -63,7 +66,10 @@ module Flue
     end
 
     def server
+      watcher = Watcher.new(files)
+      runner = self
       app = Rack::Builder.new do
+        use Flue::Middleware, watcher, runner
         run Rack::Directory.new(File.join([Dir.pwd, "_site"]))
       end
       Rack::Server.start :app => app, :Port => 9292

@@ -5,6 +5,8 @@ require "flue/basefile"
 require "flue/partial_file"
 require "flue/filter_register"
 require "flue/content_filter"
+require "flue/watcher"
+require "flue/middleware"
 require "flue/runner"
 require "flue/init"
 
