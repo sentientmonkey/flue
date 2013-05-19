@@ -1,37 +1,17 @@
 require "fileutils"
-require "yaml"
 require "rack"
 require 'ostruct'
 require 'optparse'
-
 
 module Flue
   class Runner
     include Flue::Benchmark
     include Flue::Logger
 
-    def files
-      Dir["site/[^_]*"] - Dir["site/*.yml"]
-    end
+    attr_reader :renderer
 
-    def render_files
-      files.each do |file|
-        render_file file
-      end
-    end
-
-    def render_file(file)
-      basefile = Basefile.new(file)
-      File.open(basefile.outfile_name, "w") do |f|
-        benchmark "#{basefile.basename} => #{basefile.outfile_name}" do
-          options = {}
-          data = basefile.datafile
-          if data
-            options[:variables] = YAML.load(data)
-          end
-          f.write FilterRegister.run(basefile.exts, basefile.content, options)
-        end
-      end
+    def initialize
+      @renderer = Renderer.new
     end
 
     def parse(args)
@@ -59,17 +39,17 @@ module Flue
     def run(args)
       options = parse(args)
       logger.info "beginning run..."
-      render_files
+      renderer.render_files
       if options.run_server
         server
       end
     end
 
     def server
-      watcher = Watcher.new(files)
-      runner = self
+      watcher = Watcher.new(renderer.files)
+      r = renderer
       app = Rack::Builder.new do
-        use Flue::Middleware, watcher, runner
+        use Flue::Middleware, watcher, r
         run Rack::Directory.new(File.join([Dir.pwd, "_site"]))
       end
       Rack::Server.start :app => app, :Port => 9292

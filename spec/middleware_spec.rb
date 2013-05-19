@@ -2,11 +2,11 @@ require './spec/test_helper.rb'
 
 describe Middleware do
 
-  RENDERED_FILE = 'index.html'
-  TEMPLATE_FILE = 'index.erb.html'
+  let(:rendered_file){ 'index.html' }
+  let(:template_file){ 'index.erb.html' }
 
   let(:middleware) do
-    Middleware.new(app, watcher, runner)
+    Middleware.new(app, watcher, renderer)
   end
 
   let(:app) do
@@ -17,20 +17,20 @@ describe Middleware do
 
   let(:watcher) do
     w = MiniTest::Mock.new
-    w.expect :changes, [TEMPLATE_FILE]
+    w.expect :changes, [template_file]
     w
   end
 
-  let(:runner) do
+  let(:renderer) do
     r = MiniTest::Mock.new
-    r.expect :files, [TEMPLATE_FILE]
-    r.expect :render_file, true, [TEMPLATE_FILE]
+    r.expect :files, [template_file]
+    r.expect :render_file, true, [template_file]
     r
   end
 
   let(:env) do
     e = MiniTest::Mock.new
-    e.expect :[], RENDERED_FILE, ['PATH_INFO']
+    e.expect :[], rendered_file, ['PATH_INFO']
     e
   end
 
