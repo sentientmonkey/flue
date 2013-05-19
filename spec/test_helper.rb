@@ -5,10 +5,9 @@ if ENV["COVERAGE"]
   end
 end
 
-require "minitest/spec"
 require "minitest/mock"
-require "minitest/autorun"
 require "minitest/pride"
+require "minitest/autorun"
 require 'flue'
 
 include Flue
