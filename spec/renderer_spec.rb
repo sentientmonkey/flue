@@ -38,6 +38,10 @@ describe Renderer do
     b
   end
 
+  let(:filter_result) do
+    MiniTest::Mock.new
+  end
+
   it "should fetch files" do
     Dir.stub :[], DirMock.new do
       renderer.files.must_equal RESULT_LIST
@@ -52,6 +56,14 @@ describe Renderer do
     end
   end
 
-  it "should render files"
+  it "should render files" do
+    File.stub :open, FileMock.new do
+      Dir.stub :[], DirMock.new do
+        Basefile.stub :new, basefile do
+          renderer.render_files
+        end
+      end
+    end
+  end
 
 end

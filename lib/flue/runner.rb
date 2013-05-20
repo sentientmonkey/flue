@@ -52,7 +52,7 @@ module Flue
         use Flue::Middleware, watcher, r
         run Rack::Directory.new(File.join([Dir.pwd, "_site"]))
       end
-      Rack::Server.start :app => app, :Port => 9292
+      Rack::Server.start :app => app, :Port => 9292, :server => :puma
     end
 
   end
