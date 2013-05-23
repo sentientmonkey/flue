@@ -8,6 +8,8 @@ require "flue/content_filter"
 require "flue/renderer"
 require "flue/watcher"
 require "flue/middleware"
+require "flue/server"
 require "flue/runner"
+require "flue/task"
 require "flue/init"
 

@@ -25,6 +25,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'nokogiri'
   gem.add_dependency 'coderay'
   gem.add_dependency 'rack'
+  gem.add_dependency 'thor'
   gem.add_development_dependency 'minitest'
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'yard'
