@@ -1,6 +1,6 @@
 # Flue
 
-[![Build Status](https://travis-ci.org/[sentientmonkey]/[flue].png)](https://travis-ci.org/[sentientmonkey]/[flue])
+[![Build Status](https://travis-ci.org/sentientmonkey/flue.png)](https://travis-ci.org/sentientmonkey/flue)
 
 
 TODO: Write a gem description
