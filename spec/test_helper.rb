@@ -5,6 +5,9 @@ if ENV["COVERAGE"]
   end
 end
 
+require 'coveralls'
+Coveralls.wear!
+
 require "minitest/mock"
 require "minitest/pride"
 require "minitest/autorun"

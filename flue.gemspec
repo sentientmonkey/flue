@@ -29,4 +29,5 @@ Gem::Specification.new do |gem|
   gem.add_development_dependency 'minitest'
   gem.add_development_dependency 'simplecov'
   gem.add_development_dependency 'yard'
+  gem.add_development_dependency 'coveralls'
 end
