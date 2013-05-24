@@ -1,6 +1,7 @@
 # Flue
 
 [![Build Status](https://travis-ci.org/sentientmonkey/flue.png)](https://travis-ci.org/sentientmonkey/flue)
+[![Code Climate](https://codeclimate.com/github/sentientmonkey/flue.png)](https://codeclimate.com/github/sentientmonkey/flue)
 
 A simple static site generator written in ruby.
 
