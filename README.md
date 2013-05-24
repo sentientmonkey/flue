@@ -2,26 +2,40 @@
 
 [![Build Status](https://travis-ci.org/sentientmonkey/flue.png)](https://travis-ci.org/sentientmonkey/flue)
 
-
-TODO: Write a gem description
+A simple static site generator written in ruby.
 
 ## Installation
 
-Add this line to your application's Gemfile:
-
-    gem 'flue'
-
-And then execute:
-
-    $ bundle
-
-Or install it yourself as:
+Install the gem:
 
     $ gem install flue
 
-## Usage
+Then execute:
 
-TODO: Write usage instructions here
+    $ flue
+
+## Commands
+
+    flue build             # builds site
+    flue help [COMMAND]    # Describe available commands or one specific command
+    flue server [options]  # runs server mode
+
+## Build
+
+    Usage:
+      flue build
+
+    builds site
+
+## Server
+
+    Usage:
+      flue server [options]
+
+    Options:
+      -t, [--type=TYPE]  # Type of server
+
+    runs server mode
 
 ## Contributing
 
