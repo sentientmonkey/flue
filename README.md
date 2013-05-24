@@ -35,6 +35,7 @@ Then execute:
 
     Options:
       -t, [--type=TYPE]  # Type of server
+      -p, [--port=PORT]  # Port for server
 
     runs server mode
 

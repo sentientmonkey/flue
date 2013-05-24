@@ -11,14 +11,10 @@ module Flue
     end
 
     def start(options={})
-      #HACK need to assign locals for scoping
-      w = watcher
-      r = renderer
-      app = Rack::Builder.new do
-        use Flue::Middleware, w, r
-        run Rack::Directory.new(File.join([Dir.pwd, "_site"]))
-      end
-      Rack::Server.start :app => app, :Port => 9292, :server => options[:type]
+      app = Rack::Builder.new
+      app.use Flue::Middleware, watcher, renderer
+      app.run Rack::Directory.new(File.join([Dir.pwd, "_site"]))
+      Rack::Server.start :app => app, :Port => options[:port], :server => options[:type]
     end
 
   end

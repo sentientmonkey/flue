@@ -10,6 +10,7 @@ module Flue
 
     desc "server [options]", "runs server mode"
     method_option :type, :aliases => "-t", :desc => "Type of server"
+    method_option :port, :aliases => "-p", :desc => "Port for server"
     def server
       build
       server = Server.new(@renderer)
