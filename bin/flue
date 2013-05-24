@@ -2,5 +2,4 @@
 
 require 'flue'
 
-#Flue::Runner.new.run(ARGV)
-Flue::Task.start(ARGV)
+Flue::Runner.start(ARGV)
