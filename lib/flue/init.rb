@@ -1,3 +1,11 @@
+require 'flue/filters/markdown.rb'
+require 'flue/filters/erb.rb'
+require 'flue/filters/textile.rb'
+require 'flue/filters/emoji.rb'
+require 'flue/filters/code.rb'
+require 'flue/filters/sass.rb'
+require 'flue/filters/coffee_script.rb'
+
 module Flue
 
   FilterRegister.register :erb, ERBFilter
