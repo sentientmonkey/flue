@@ -22,7 +22,7 @@ module Flue
     end
 
     def exts
-      parts[1..-2]
+      [parts[-1], *parts[1..-2]]
     end
 
     def outfile_basename

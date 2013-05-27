@@ -13,6 +13,8 @@ module Flue
   FilterRegister.register :textile, TextileFilter
   FilterRegister.register :emoji, EmojiFilter
   FilterRegister.register :code, CodeFilter
+  FilterRegister.register :html, CodeFilter
+  FilterRegister.register :html, EmojiFilter
   FilterRegister.register :scss, SassFilter
   FilterRegister.register :coffee, CoffeeScriptFilter
 

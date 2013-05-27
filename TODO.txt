@@ -8,7 +8,8 @@
 * Add ability to refresh files in server mode [done]
 * Refactor down runner into renderer & option parser [done]
 * Refactor out filters into seperate files [done]
-* Set up default filters via final ext
+* Set up default filters via final ext [done]
+* Add options for custom filters
 * Add publishers for s3/ftp/rsync
 * Add config for site/public
 * Add DAG for rebuild & dependancies

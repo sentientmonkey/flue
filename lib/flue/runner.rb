@@ -2,6 +2,8 @@ require 'thor'
 
 module Flue
   class Runner < Thor
+    include Flue::Logger
+
     desc "build", "builds site"
     def build
       @renderer = Renderer.new
@@ -15,6 +17,13 @@ module Flue
       build
       server = Server.new(@renderer)
       server.start(options)
+    end
+
+    desc "filters", "shows filters"
+    def filters
+      FilterRegister.filters_by_name.each do |filter,ext|
+        logger.info "#{filter.name}: #{ext.join(', ')}"
+      end
     end
   end
 end

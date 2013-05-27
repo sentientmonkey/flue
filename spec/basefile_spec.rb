@@ -14,7 +14,7 @@ describe Basefile do
   end
 
   it "should have exts" do
-    md_erb.exts.must_equal ["md","erb"]
+    md_erb.exts.must_equal ["html", "md","erb"]
   end
 
   it "should have dirname" do
