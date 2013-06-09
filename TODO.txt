@@ -9,9 +9,11 @@
 * Refactor down runner into renderer & option parser [done]
 * Refactor out filters into seperate files [done]
 * Set up default filters via final ext [done]
+* Added .meta.yml for checksums [done]
+* Build DAG
+* Add DAG for rebuild & dependancies
+  Can checksum files, build .meta.yml file, trigger what needs to be rebuild via DAG
+  yaml -> partials -> template
 * Add options for custom filters
 * Add publishers for s3/ftp/rsync
 * Add config for site/public
-* Add DAG for rebuild & dependancies
-  Can checksum files, build .meta.yaml file, trigger what needs to be rebuild via DAG
-  yaml -> partials -> template

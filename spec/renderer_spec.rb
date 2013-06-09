@@ -38,6 +38,8 @@ describe Renderer do
     b
   end
 
+  let(:metadata){ MiniTest::Mock.new }
+
   let(:filter_result) do
     MiniTest::Mock.new
   end
@@ -48,22 +50,37 @@ describe Renderer do
     end
   end
 
-  it "should render a file" do
-    File.stub :open, FileMock.new do
+  it "should fetch basefiles" do
+    Dir.stub :[], DirMock.new do
       Basefile.stub :new, basefile do
-        renderer.render_file RENDER_FILE
+        renderer.basefiles.must_equal [basefile]
       end
     end
   end
 
-  it "should render files" do
+  it "should render a file" do
+    metadata.expect(:update_checksum, true, [basefile])
     File.stub :open, FileMock.new do
-      Dir.stub :[], DirMock.new do
-        Basefile.stub :new, basefile do
-          renderer.render_files
+      Basefile.stub :new, basefile do
+        Metadata.stub :new, metadata do
+          renderer.render_file basefile
         end
       end
     end
+    metadata.verify
   end
 
+  it "should render files" do
+    metadata.expect(:update_checksum, true, [basefile])
+    File.stub :open, FileMock.new do
+      Dir.stub :[], DirMock.new do
+        Basefile.stub :new, basefile do
+          Metadata.stub :new, metadata do
+            renderer.render_files
+          end
+        end
+      end
+    end
+    metadata.verify
+  end
 end

@@ -55,5 +55,19 @@ describe Basefile do
     end
   end
 
+  it "should have a checksum" do
+    test_content = "test content"
+    File.stub :read, test_content do
+      md_erb.checksum.must_equal "6ae8a75555209fd6c44157c0aed8016e763ff435a19cf186f76863140143ff72"
+    end
+  end
+
+  it "should be equal if filename & checksums are same" do
+    test_content = "test content"
+    File.stub :read, test_content do
+      md_erb.must_equal md_erb.dup
+    end
+  end
+
 end
 

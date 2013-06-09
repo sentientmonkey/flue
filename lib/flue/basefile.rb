@@ -1,4 +1,5 @@
 require "fileutils"
+require "digest/sha2"
 
 module Flue
   class Basefile
@@ -49,6 +50,23 @@ module Flue
 
     def content
       File.read(filename)
+    end
+
+    def checksum
+      digest.hexdigest(content)
+    end
+
+    def ==(other)
+      other.class == self.class &&
+        other.filename == self.filename &&
+        other.checksum == self.checksum
+    end
+    alias_method :eql?, :==
+
+    private
+
+    def digest
+      Digest::SHA256
     end
   end
 end

@@ -4,6 +4,7 @@ describe Middleware do
 
   let(:rendered_file){ 'index.html' }
   let(:template_file){ 'index.erb.html' }
+  let(:basefile){ Basefile.new(template_file) }
 
   let(:middleware) do
     Middleware.new(app, watcher, renderer)
@@ -23,8 +24,8 @@ describe Middleware do
 
   let(:renderer) do
     r = MiniTest::Mock.new
-    r.expect :files, [template_file]
-    r.expect :render_file, true, [template_file]
+    r.expect :basefiles, [basefile]
+    r.expect :render_file, true, [basefile]
     r
   end
 
