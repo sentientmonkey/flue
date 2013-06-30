@@ -1,4 +1,5 @@
 require './spec/test_helper.rb'
+require 'ostruct'
 
 describe Renderer do
 
@@ -8,9 +9,10 @@ describe Renderer do
   FILE_lIST = [RENDER_FILE, YAML_FILE]
   YAML_LIST = [YAML_FILE]
   RESULT_LIST = [RENDER_FILE]
+  RENDERED_RESULT = "result"
 
   class DirMock
-    def call(glob)
+    def self.[](glob)
       case glob
       when "site/[^_]*"
         FILE_lIST
@@ -20,67 +22,73 @@ describe Renderer do
     end
   end
 
-  class FileMock
-    def call(filename, writemode)
-      filename.must_equal RENDERED_FILE
-      writemode.must_equal "w"
-      #TODO figure out to verify a block
+  module MockIO
+    attr_reader :mock_io
+    def open(*args)
+      @mock_io = StringIO.new
+      yield @mock_io
+      @mock_io.close
     end
   end
 
-  let(:renderer) do
-    Renderer.new
+  module MockBenchmark
+    attr_reader :mock_benchmark_label
+    def benchmark(*args)
+      @mock_benchmark_label = args.first
+      yield
+    end
   end
 
-  let(:basefile) do
-    b = MiniTest::Mock.new
-    b.expect :outfile_name, RENDERED_FILE
-    b
+  class MockFilterRegister
+    def self.run(*args)
+      RENDERED_RESULT
+    end
+  end
+
+  class MockBasefile < OpenStruct
+    def initialize(*args)
+      super :basename => RENDER_FILE, :outfile_name => RENDERED_FILE, :datafile => ""
+    end
   end
 
   let(:metadata){ MiniTest::Mock.new }
+
+  let(:renderer) do
+    r = Renderer.new(metadata, MockFilterRegister, DirMock, MockBasefile)
+    r.extend MockIO
+    r.extend MockBenchmark
+    r
+  end
+
+  let(:basefile) do
+    MockBasefile.new
+  end
 
   let(:filter_result) do
     MiniTest::Mock.new
   end
 
   it "should fetch files" do
-    Dir.stub :[], DirMock.new do
-      renderer.files.must_equal RESULT_LIST
-    end
+    renderer.files.must_equal RESULT_LIST
   end
 
   it "should fetch basefiles" do
-    Dir.stub :[], DirMock.new do
-      Basefile.stub :new, basefile do
-        renderer.basefiles.must_equal [basefile]
-      end
-    end
+    renderer.basefiles.must_equal [basefile]
   end
 
   it "should render a file" do
     metadata.expect(:update_checksum, true, [basefile])
-    File.stub :open, FileMock.new do
-      Basefile.stub :new, basefile do
-        Metadata.stub :new, metadata do
-          renderer.render_file basefile
-        end
-      end
-    end
+    renderer.render_file basefile
+    renderer.mock_io.string.must_equal RENDERED_RESULT
+    renderer.mock_benchmark_label.must_equal "a.erb.html => a.html"
     metadata.verify
   end
 
   it "should render files" do
     metadata.expect(:update_checksum, true, [basefile])
-    File.stub :open, FileMock.new do
-      Dir.stub :[], DirMock.new do
-        Basefile.stub :new, basefile do
-          Metadata.stub :new, metadata do
-            renderer.render_files
-          end
-        end
-      end
-    end
+    renderer.render_files
+    renderer.mock_io.string.must_equal RENDERED_RESULT
+    renderer.mock_benchmark_label.must_equal "a.erb.html => a.html"
     metadata.verify
   end
 end
