@@ -6,6 +6,7 @@ require 'flog'
 require 'flog_task'
 require 'flay'
 require 'flay_task'
+require 'reek/rake/task'
 
 Rake::TestTask.new do |t|
   t.libs.push "lib"
@@ -18,8 +19,12 @@ YARD::Rake::YardocTask.new do |t|
   t.options = ['--any', '--extra', '--opts'] # optional
 end
 
-FlogTask.new :flog, 500, %w(lib)
+FlogTask.new :flog, 450, %w(lib)
 FlayTask.new :flay, 10, %w(lib spec)
 
+Reek::Rake::Task.new do |t|
+  t.fail_on_error = false
+end
+
 desc "Runs all code quality metrics"
-task :quality => [:flog, :flay]
+task :quality => [:reek, :flog, :flay]
