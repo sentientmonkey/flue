@@ -48,6 +48,11 @@ module Flue
       end
     end
 
+    def variables
+      data = datafile
+      YAML.load(data) if data
+    end
+
     def content
       File.read(filename)
     end

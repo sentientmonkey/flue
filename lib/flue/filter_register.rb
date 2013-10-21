@@ -1,9 +1,8 @@
 module Flue
   class FilterRegister
-    @@filters = {}
 
     def self.filters
-      @@filters
+      @@filters ||= {}
     end
 
     def self.clear
@@ -20,14 +19,15 @@ module Flue
     end
 
     def self.register(ext, filter)
-      filters[ext.to_s] ||= []
-      filters[ext.to_s] << filter
+      ext_name = ext.to_s
+      filters[ext_name] ||= []
+      filters[ext_name] << filter
     end
 
     def self.run(exts, content, options={})
-      f = exts.pop
-      return content unless f
-      result = run_ext(f, content, options)
+      filter = exts.pop
+      return content unless filter
+      result = run_ext(filter, content, options)
       run(exts,result, options)
     end
 

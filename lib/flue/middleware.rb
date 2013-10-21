@@ -12,7 +12,7 @@ module Flue
 
     def call(env)
       file = File.basename(env['PATH_INFO'])
-      basefile = renderer.basefiles.detect{|f| f.outfile_basename == file }
+      basefile = renderer.basefiles.detect{|basefile| basefile.outfile_basename == file }
       if basefile && watcher.changes.include?(basefile.filename)
         renderer.render_file(basefile)
       end

@@ -34,11 +34,7 @@ module Flue
     def render_file(basefile)
       open(basefile.outfile_name, "w") do |f|
         benchmark "#{basefile.basename} => #{basefile.outfile_name}" do
-          options = {}
-          data = basefile.datafile
-          if data
-            options[:variables] = YAML.load(data)
-          end
+          options = {:variables => basefile.variables}
           f.write filter_register.run(basefile.exts, basefile.content, options)
         end
       end

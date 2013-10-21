@@ -40,13 +40,26 @@ describe Basefile do
     md_erb.datafile_name.must_equal "site/test.yml"
   end
 
-  it "should have a datafile_name" do
+  it "should have a datafile contents" do
     test_data = "test data"
     File.stub :exists?, true do
       File.stub :read, test_data do
         md_erb.datafile.must_equal test_data
       end
     end
+  end
+
+  it "should return datafile variables" do
+    test_data = <<-eos
+---
+  foo:    bar
+eos
+    File.stub :exists?, true do
+      File.stub :read, test_data do
+        md_erb.variables.must_equal "foo" => "bar"
+      end
+    end
+
   end
 
   it "should not have test data when file does not exist" do
