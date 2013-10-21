@@ -11,12 +11,20 @@ module Flue
     end
 
     def call(env)
+      basefile = find_basefile(env)
+      render_if_changed basefile
+      app.call(env)
+    end
+
+    def find_basefile(env)
       file = File.basename(env['PATH_INFO'])
-      basefile = renderer.basefiles.detect{|basefile| basefile.outfile_basename == file }
+      renderer.basefiles.detect{|basefile| basefile.outfile_basename == file }
+    end
+
+    def render_if_changed(basefile)
       if basefile && watcher.changes.include?(basefile.filename)
         renderer.render_file(basefile)
       end
-      app.call(env)
     end
   end
 end

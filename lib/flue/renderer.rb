@@ -32,10 +32,10 @@ module Flue
     end
 
     def render_file(basefile)
-      open(basefile.outfile_name, "w") do |f|
+      open(basefile.outfile_name, "w") do |file|
         benchmark "#{basefile.basename} => #{basefile.outfile_name}" do
           options = {:variables => basefile.variables}
-          f.write filter_register.run(basefile.exts, basefile.content, options)
+          file.write filter_register.run(basefile.exts, basefile.content, options)
         end
       end
       metadata.update_checksum(basefile)

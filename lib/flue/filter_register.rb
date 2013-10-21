@@ -32,7 +32,7 @@ module Flue
     end
 
     def self.run_ext(ext, content, options)
-      if filters[ext]
+      if filters.include? ext
         filters[ext].inject(content) do |cont, filter|
           filter.new.call(cont, options)
         end
